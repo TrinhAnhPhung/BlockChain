@@ -1,15 +1,17 @@
-// src/components/Navbar.jsx - Frontend Only Version
+// src/components/Navbar.jsx - Blockchain Integrated Version
 import React, { useState } from 'react';
 import { FiSearch, FiChevronDown, FiHeart, FiShoppingCart } from 'react-icons/fi';
 import { FaPills } from 'react-icons/fa';
+import MetaMaskConnect from './MetaMaskConnect';
+import { useCart } from '../contexts/CartContext';
 
 const Navbar = () => {
   const [searchQuery, setSearchQuery] = useState('');
+  const { openCart, getTotalItems } = useCart();
 
   const handleSearch = (e) => {
     e.preventDefault();
-    // In frontend-only version, we'll just show an alert
-    alert(`Searching for: "${searchQuery}" (Frontend-Only Demo)`);
+    alert(`Searching for: "${searchQuery}" (Feature coming soon)`);
   };
 
   return (
@@ -23,8 +25,8 @@ const Navbar = () => {
               <FaPills className="w-6 h-6 text-white" />
             </div>
             <span className="text-2xl font-bold gradient-text">Propharm</span>
-            <span className="text-xs bg-green-100 text-green-700 px-2 py-1 rounded-full font-medium">
-              Frontend Only
+            <span className="text-xs bg-blue-100 text-blue-700 px-2 py-1 rounded-full font-medium">
+              Blockchain
             </span>
           </div>
 
@@ -72,31 +74,19 @@ const Navbar = () => {
 
              {/* Cart Icon */}
              <button 
-               onClick={() => alert('Shopping cart feature (Frontend-Only Demo)')}
+               onClick={openCart}
                className="relative p-3 rounded-xl text-gray-600 hover:text-blue-600 hover:bg-blue-50 transition-all duration-200 group"
              >
                <FiShoppingCart className="h-6 w-6" strokeWidth={2} />
-               <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center font-semibold">3</span>
+               {getTotalItems() > 0 && (
+                 <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center font-semibold">
+                   {getTotalItems()}
+                 </span>
+               )}
              </button>
 
-             {/* Demo Notice */}
-             <div className="flex items-center space-x-2 px-3 py-2 bg-blue-100 text-blue-700 rounded-lg">
-               <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
-               <span className="text-sm font-medium">Demo Mode</span>
-             </div>
-
-             {/* User Avatar */}
-             <div className="ml-2 relative">
-               <button 
-                 onClick={() => alert('User profile feature (Frontend-Only Demo)')}
-                 className="flex items-center space-x-2 p-2 rounded-xl hover:bg-gray-50 transition-all duration-200 group"
-               >
-                 <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full flex items-center justify-center text-white font-semibold text-sm">
-                   Demo
-                 </div>
-                 <FiChevronDown className="w-4 h-4 text-gray-500 group-hover:text-gray-700" />
-               </button>
-             </div>
+             {/* MetaMask Connect */}
+             <MetaMaskConnect />
            </div>
         </div>
       </div>

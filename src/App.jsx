@@ -1,8 +1,11 @@
-// src/App.jsx - Frontend Only Version
+// src/App.jsx - Blockchain Integrated Version
 import React from 'react';
 import Navbar from './components/Navbar';
 import Banner from './components/Banner';
 import ProductSection from './components/ProductSection';
+import Cart from './components/Cart';
+import { Web3Provider } from './contexts/Web3Context';
+import { CartProvider } from './contexts/CartContext';
 
 // Dữ liệu mẫu cho Frontend-Only Version
 const fluProducts = [
@@ -112,33 +115,38 @@ const vitaminProducts = [
 
 function App() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-blue-100">
-      <Navbar />
-      
-      <main className="fade-in">
-        <Banner />
-        
-        {/* Section Thuốc cảm cúm */}
-        <ProductSection 
-          title="Flu Medicine" 
-          products={fluProducts}
-          description="Effective medications for cold and flu symptoms"
-        />
-        
-        {/* Section Thuốc ho */}
-        <ProductSection 
-          title="Cough Medicine" 
-          products={coughProducts}
-          description="Relief for various types of cough and throat irritation"
-        />
-        
-        {/* Section Vitamins */}
-        <ProductSection 
-          title="Vitamins & Supplements" 
-          products={vitaminProducts}
-          description="Essential vitamins and supplements for daily health"
-        />
-      </main>
+    <Web3Provider>
+      <CartProvider>
+        <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-blue-100">
+          <Navbar />
+          
+          <main className="fade-in">
+            <Banner />
+            
+            {/* Section Thuốc cảm cúm */}
+            <ProductSection 
+              title="Flu Medicine" 
+              products={fluProducts}
+              description="Effective medications for cold and flu symptoms"
+            />
+            
+            {/* Section Thuốc ho */}
+            <ProductSection 
+              title="Cough Medicine" 
+              products={coughProducts}
+              description="Relief for various types of cough and throat irritation"
+            />
+            
+            {/* Section Vitamins */}
+            <ProductSection 
+              title="Vitamins & Supplements" 
+              products={vitaminProducts}
+              description="Essential vitamins and supplements for daily health"
+            />
+          </main>
+
+          {/* Cart Component */}
+          <Cart />
 
       {/* Footer */}
       <footer className="bg-gradient-to-r from-blue-900 to-blue-800 text-white py-16">
@@ -157,7 +165,7 @@ function App() {
                 Your trusted partner in healthcare and wellness. We provide premium quality pharmaceutical products and supplements.
               </p>
               <div className="text-xs text-blue-200 bg-blue-800/30 px-3 py-2 rounded-lg">
-                📱 Frontend-Only Version - No Backend Required
+                🔗 Blockchain Integrated - MetaMask Payment Ready
               </div>
             </div>
             
@@ -188,7 +196,7 @@ function App() {
                 <p>📞 +1 (555) 123-4567</p>
                 <p>📍 123 Health Street, Medical City</p>
                 <div className="mt-3 p-2 bg-green-800/30 rounded-lg text-xs">
-                  ✅ Frontend Ready - No Database Required
+                  ✅ Blockchain Ready - MetaMask Integration
                 </div>
               </div>
             </div>
@@ -196,11 +204,13 @@ function App() {
           
           <div className="border-t border-blue-700 mt-12 pt-8 text-center text-sm text-blue-200">
             <p>&copy; 2024 Propharm. All rights reserved. | Privacy Policy | Terms of Service</p>
-            <p className="mt-2 text-xs">Frontend-Only Version - Static Demo Application</p>
+            <p className="mt-2 text-xs">Blockchain Integrated Version - MetaMask Payment Ready</p>
           </div>
         </div>
       </footer>
-    </div>
+        </div>
+      </CartProvider>
+    </Web3Provider>
   );
 }
 

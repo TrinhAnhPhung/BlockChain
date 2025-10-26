@@ -1,14 +1,20 @@
-// src/components/ProductCard.jsx - Frontend Only Version
-import React from 'react';
-import { FiStar, FiShoppingCart, FiHeart } from 'react-icons/fi';
+// src/components/ProductCard.jsx - Blockchain Integrated Version
+import React, { useState } from 'react';
+import { FiStar, FiShoppingCart, FiHeart, FiCheck } from 'react-icons/fi';
+import { useCart } from '../contexts/CartContext';
 
 const ProductCard = ({ product }) => {
+  const { addToCart } = useCart();
+  const [isAdded, setIsAdded] = useState(false);
+
   const handleAddToCart = () => {
-    alert(`Added "${product.name}" to cart (Frontend-Only Demo)`);
+    addToCart(product);
+    setIsAdded(true);
+    setTimeout(() => setIsAdded(false), 2000);
   };
 
   const handleAddToWishlist = () => {
-    alert(`Added "${product.name}" to wishlist (Frontend-Only Demo)`);
+    alert(`Added "${product.name}" to wishlist (Feature coming soon)`);
   };
 
   return (
@@ -74,10 +80,24 @@ const ProductCard = ({ product }) => {
           
           <button
             onClick={handleAddToCart}
-            className="flex items-center space-x-2 px-4 py-2 bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-lg hover:from-blue-600 hover:to-blue-700 transition-all duration-200 shadow-md hover:shadow-lg"
+            disabled={isAdded}
+            className={`flex items-center space-x-2 px-4 py-2 rounded-lg transition-all duration-200 shadow-md hover:shadow-lg ${
+              isAdded 
+                ? 'bg-green-500 text-white cursor-not-allowed' 
+                : 'bg-gradient-to-r from-blue-500 to-blue-600 text-white hover:from-blue-600 hover:to-blue-700'
+            }`}
           >
-            <FiShoppingCart className="w-4 h-4" />
-            <span className="text-sm font-medium">Add</span>
+            {isAdded ? (
+              <>
+                <FiCheck className="w-4 h-4" />
+                <span className="text-sm font-medium">Added!</span>
+              </>
+            ) : (
+              <>
+                <FiShoppingCart className="w-4 h-4" />
+                <span className="text-sm font-medium">Add</span>
+              </>
+            )}
           </button>
         </div>
       </div>
